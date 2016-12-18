@@ -3,13 +3,7 @@
 #include <curl/curl.h>
 #include <string.h>
 
-/* compilar : gcc -g http_get_json.c -o http_get_json -lcurl -ljansson
- *
- * NOTA : AINDA NÃO ESTÁ A FUNCIONAR, TENHO 1 ERRO DE COMPILAÇÃO
- *
- */
-
-json_t * ​http_get_json_data​(const char *uri);
+json_t * http_get_json_data(const char *uri);
 char * request(const char *uri);
 static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream);
 
@@ -19,7 +13,7 @@ int main(){
 	root = http_get_json_data(uri);
 }
 
-json_t * ​http_get_json_data​(const char *uri){ // função que descodifica os dados contidos na string usando o json
+json_t * http_get_json_data(const char *uri){ // função que descodifica os dados contidos na string usando o json
 	char *coded;
 	json_t *root;
 	json_error_t error;
