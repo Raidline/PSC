@@ -32,7 +32,7 @@ typedef struct sdate {
 
 Weather * get_hourly_weather(Location *, Date *);
 void free_hourly_weather(Weather *);
-json_t * http_get_json_data(const char *uri);
+json_t * http_get_json_data(const char *uri);	
 
 int main(){
 	const char * name = "Lisboa";
