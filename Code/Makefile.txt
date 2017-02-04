@@ -1,0 +1,53 @@
+CFLAGS = -Wall -pedantic -std=c99 -c -g
+
+HEADER_FILES = weathers.h hourly_weather.h get_json.h
+
+ALL = app #app_get app_1
+
+all: $(ALL)
+
+#app_1: app.o lib.so
+#	gcc -o $@ app.o ./lib.so
+
+app_get: app_get.o lib1.so
+	gcc -o $@ app_get.o ./lib1.so
+	
+	
+app: app.o get_weathers.o get_hourly_weather.o http_get_json.o
+	gcc -g app.o get_weathers.o get_hourly_weather.o http_get_json.o -o app -lcurl -ljansson
+
+
+#Criação da biblioteca partilhada
+
+lib.so: get_weathers.o get_hourly_weather.o http_get_json.o
+	gcc -fPIC -shared -o $@ $^
+
+lib1.so: http_get.o
+	gcc -fPIC -shared -o $@ $^
+
+
+
+#Geração dos .o
+
+app.o: app.c $(HEADER_FILES)
+	gcc $(CFLAGS) app.c
+
+app_get.o: app_get.c http_get.h
+	gcc $(CFLAGS) app_get.c
+	
+	
+	
+get_weathers.o: get_weathers.c
+	gcc $(CFLAGS) get_weathers.c
+	
+get_hourly_weather.o: get_hourly_weather.c
+	gcc $(CFLAGS) get_hourly_weather.c
+
+http_get_json.o: http_get_json.c
+	gcc $(CFLAGS) http_get_json.c
+	
+http_get.o: http_get.c
+	gcc $(CFLAGS) -fPIC http_get.c
+	
+clean:
+	-rm -f *.o *.txt *.so $(ALL)
